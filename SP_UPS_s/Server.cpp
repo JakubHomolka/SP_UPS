@@ -183,12 +183,14 @@ int Server::listenConnections() {
                                     to_string(pl->socket) << endl;
                             pl->invalid_message_counter--;
                             Response::sendErrorToPlayer(pl,"END|max invalid messages reached");
+                            pl->invalid_message_counter = 0;
                             auto game = GameManager::gameExists(pl->game_id);
                             if (game != nullptr) {
                                 if(game->gameState == "WAITING") GameManager::playerDequeue(pl);
                                 if(game->gameState == "RUNNING") GameManager::playerLeaveGame(pl);
                             }
                             disconnect(fd);
+                            ClientManager::destroyPlayer(fd);
                         }
 
 
