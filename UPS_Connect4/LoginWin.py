@@ -118,6 +118,7 @@ class LoginWin:
                 self.last_message_time = time.time()
                 if not data:
                     print("Connection with server was ended.")
+                    self.end()
                     break
 
                 self.buffer += data
